@@ -3,11 +3,14 @@ package com.carmanager.Client.Service;
 import com.carmanager.Client.Adapter.Persistance.Entity.ClientEntity;
 import com.carmanager.Client.Domain.Client;
 import com.carmanager.Client.Domain.Exception.ClientNotFoundException;
+import com.carmanager.Client.Port.PaginateClientAdapterInterface;
 import com.carmanager.Client.Port.SaveClientAdapterInterface;
 import com.carmanager.Client.Port.SingleClientAdapterInterface;
 import com.carmanager.Client.Port.UpdateClientAdapterInterface;
 import com.carmanager.Client.Repository.ClientRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -27,14 +30,17 @@ public class UserManager
     @Autowired
     UpdateClientAdapterInterface updateClientAdapter;
 
+    @Autowired
+    PaginateClientAdapterInterface paginateClientAdapter;
+
     public Client createNew()
     {
         return new Client();
     }
 
-    public Client findById(Long clientId) throws Exception
+    public Client findById(Long clientId) throws ClientNotFoundException
     {
-        Optional<ClientEntity> entity = Optional.ofNullable(clientRepository.findById(clientId));
+        Optional<ClientEntity> entity = clientRepository.findById(clientId);
 
         if (entity.isEmpty()) {
             throw new ClientNotFoundException();
@@ -45,13 +51,19 @@ public class UserManager
 
     public void delete(Long clientId)
     {
-        clientRepository.delete(clientId);
+        clientRepository.deleteById(clientId);
     }
 
-    public void update(Long id, Client client)
+    public void update(Long clientId, Client client) throws ClientNotFoundException
     {
-        clientRepository.update(
-            updateClientAdapter.adapt(client, id)
+        Optional<ClientEntity> entity = clientRepository.findById(clientId);
+
+        if (entity.isEmpty()) {
+            throw new ClientNotFoundException();
+        }
+
+        clientRepository.save(
+            updateClientAdapter.adapt(client, clientId)
         );
     }
 
@@ -59,6 +71,13 @@ public class UserManager
     {
         clientRepository.save(
             saveClientAdapter.adapt(client)
+        );
+    }
+
+    public Page<Client> paginate(Pageable pageable)
+    {
+        return paginateClientAdapter.adapt(
+            clientRepository.findAll(pageable)
         );
     }
 }

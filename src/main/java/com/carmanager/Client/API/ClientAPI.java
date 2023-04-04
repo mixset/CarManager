@@ -1,9 +1,13 @@
 package com.carmanager.Client.API;
 
+import com.carmanager.Client.Adapter.Persistance.Entity.ClientEntity;
 import com.carmanager.Client.Controller.DTO.ClientDTO;
 import com.carmanager.Client.Domain.Client;
+import com.carmanager.Client.Domain.Exception.ClientNotFoundException;
 import com.carmanager.Client.Service.UserManager;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,12 +38,16 @@ public class ClientAPI
         client.setFirstname(clientDTO.getFirstname());
         client.setLastname(clientDTO.getLastname());
 
-        userManager.update(id, client);
+        try {
+            userManager.update(id, client);
+        } catch (ClientNotFoundException e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
     }
 
-    public String paginate()
+    public Page<Client> paginate(Pageable pageable)
     {
-        return "Get clients with pagination";
+        return userManager.paginate(pageable);
     }
 
     public String getClientVehicles(Long id)
