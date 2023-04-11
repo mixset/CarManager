@@ -1,46 +1,54 @@
+DROP TABLE IF EXISTS brand;
 DROP TABLE IF EXISTS vehicle;
+DROP TABLE IF EXISTS client;
+DROP TABLE IF EXISTS client_vehicles;
+
+-- Brand --
+
+CREATE TABLE brand (
+    uuid UUID NOT NULL DEFAULT uuid(),
+    name varchar(255) UNIQUE NOT NULL,
+    PRIMARY KEY (uuid)
+);
+
+INSERT INTO brand (name) VALUES ('VW T-ROC');
+INSERT INTO brand (name) VALUES ('Volvo S90');
+INSERT INTO brand (name) VALUES ('VW Golf');
+INSERT INTO brand (name) VALUES ('Audi A4');
+INSERT INTO brand (name) VALUES ('Fiat Tipo');
+
+-- Vehicle --
 
 CREATE TABLE vehicle (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    model varchar(255) NOT NULL,
-    PRIMARY KEY (id)
+   uuid UUID NOT NULL DEFAULT uuid(),
+   brand_id UUID NOT NULL,
+   registration_plate varchar(50) NOT NULL,
+   FOREIGN KEY (brand_id) REFERENCES brand (uuid),
+   PRIMARY KEY (uuid)
 );
 
-INSERT INTO vehicle (id, model) VALUES (1, 'saepe');
-INSERT INTO vehicle (id, model) VALUES (2, 'quae');
-INSERT INTO vehicle (id, model) VALUES (3, 'harum');
-INSERT INTO vehicle (id, model) VALUES (4, 'sit');
-INSERT INTO vehicle (id, model) VALUES (5, 'deleniti');
-
-DROP TABLE IF EXISTS client;
+-- Client --
 
 CREATE TABLE client (
-    id INTEGER NOT NULL AUTO_INCREMENT,
+    uuid UUID NOT NULL DEFAULT uuid(),
     firstname varchar(100) NOT NULL,
     lastname varchar(100) NOT NULL,
-    PRIMARY KEY (id)
+    PRIMARY KEY (uuid)
 );
 
-INSERT INTO client (id, firstname, lastname) VALUES (1, 'Filip', 'Nowak');
-INSERT INTO client (id, firstname, lastname) VALUES (2, 'Oliwier', 'Kowalski');
-INSERT INTO client (id, firstname, lastname) VALUES (3, 'Alex', 'Testowy');
-INSERT INTO client (id, firstname, lastname) VALUES (4, 'Sebastian', 'Test');
-INSERT INTO client (id, firstname, lastname) VALUES (5, 'Julian', 'Test');
+INSERT INTO client (firstname, lastname) VALUES ('Filip', 'Nowak');
+INSERT INTO client (firstname, lastname) VALUES ('Oliwier', 'Kowalski');
+INSERT INTO client (firstname, lastname) VALUES ('Alex', 'Testowy');
+INSERT INTO client (firstname, lastname) VALUES ('Sebastian', 'Test');
+INSERT INTO client (firstname, lastname) VALUES ('Julian', 'Test');
 
-DROP TABLE IF EXISTS client_has_vehicle;
+-- Client Vehicles --
 
-CREATE TABLE client_has_vehicle (
-    id INTEGER NOT NULL AUTO_INCREMENT,
-    vehicle_id INTEGER NOT NULL,
-    client_id INTEGER NOT NULL,
-    PRIMARY KEY (id)
+CREATE TABLE client_vehicles (
+    uuid UUID NOT NULL DEFAULT uuid(),
+    vehicle_id UUID NOT NULL,
+    client_id UUID NOT NULL,
+    FOREIGN KEY (vehicle_id) REFERENCES vehicle (uuid),
+    FOREIGN KEY (client_id) REFERENCES client (uuid),
+    PRIMARY KEY (uuid)
 );
-
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (1, 1, 1);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (2, 2, 2);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (3, 3, 3);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (4, 4, 4);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (5, 5, 5);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (6, 1, 1);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (7, 2, 2);
-INSERT INTO client_has_vehicle (id, vehicle_id, client_id) VALUES (8, 3, 3);
