@@ -1,12 +1,13 @@
 package com.carmanager.Brand.Adapter.Persistence.Entity;
 
-import com.carmanager.Client.Adapter.Persistance.Entity.ClientHasVehicleEntity;
+import com.carmanager.Client.Adapter.Persistance.Entity.ClientVehiclesEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Table(name = "brand")
@@ -15,12 +16,12 @@ import java.util.Set;
 public class BrandEntity
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID uuid;
 
     @Column(nullable = false)
     private String name;
 
     @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ClientHasVehicleEntity> clientHasVehicle = new HashSet<>();
+    private Set<ClientVehiclesEntity> clientHasVehicle = new HashSet<>();
 }

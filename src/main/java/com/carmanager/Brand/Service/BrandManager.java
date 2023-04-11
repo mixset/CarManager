@@ -5,11 +5,13 @@ import com.carmanager.Brand.Domain.Brand;
 import com.carmanager.Brand.Domain.Exception.BrandAlreadyExistsException;
 import com.carmanager.Brand.Domain.Exception.BrandNotFoundException;
 import com.carmanager.Brand.Port.SaveBrandAdapterInterface;
+import com.carmanager.Brand.Port.SingleBrandAdapterInterface;
 import com.carmanager.Brand.Repository.BrandRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class BrandManager
@@ -19,6 +21,9 @@ public class BrandManager
 
     @Autowired
     SaveBrandAdapterInterface saveBrandAdapter;
+
+    @Autowired
+    SingleBrandAdapterInterface singleBrandAdapter;
 
     public Brand createNew()
     {
@@ -36,14 +41,14 @@ public class BrandManager
         );
     }
 
-    public BrandEntity getImplById(Long brandId) throws BrandNotFoundException
+    public Brand findById(UUID brandId) throws BrandNotFoundException
     {
         Optional<BrandEntity> entity = brandRepository.findById(brandId);
 
         if (entity.isEmpty()) {
-            throw new BrandNotFoundException("Brand with ID %d not found.".formatted(brandId));
+            throw new BrandNotFoundException("Brand with ID %s not found.".formatted(brandId));
         }
 
-        return entity.get();
+        return singleBrandAdapter.adapt(entity.get());
     }
 }

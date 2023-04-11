@@ -9,11 +9,11 @@ import org.springframework.stereotype.Service;
 public class SaveBrandAdapter implements SaveBrandAdapterInterface
 {
     @Override
-    public BrandEntity adapt(Brand Brand)
+    public BrandEntity adapt(Brand brand)
     {
-        BrandEntity BrandEntity = new BrandEntity();
-        BrandEntity.setName(Brand.getName());
+        BrandEntity brandEntity = new BrandEntity();
+        brandEntity.setName(brand.getName());
 
-        return BrandEntity;
+        return brandEntity;
     }
 }
