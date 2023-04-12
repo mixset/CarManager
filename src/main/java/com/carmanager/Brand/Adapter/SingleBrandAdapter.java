@@ -12,6 +12,7 @@ public class SingleBrandAdapter implements SingleBrandAdapterInterface
     public Brand adapt(BrandEntity brandEntity)
     {
         Brand brand = new Brand();
+        brand.setUuid(brandEntity.getUuid());
         brand.setName(brandEntity.getName());
 
         return brand;
