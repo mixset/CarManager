@@ -1,10 +1,14 @@
 package com.carmanager.Vehicle.Repository;
 
-import com.carmanager.Vehicle.Domain.Entity.Vehicle;
 
-public interface VehicleRepositoryInterface
+import com.carmanager.Vehicle.Adapter.Entity.VehicleEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.UUID;
+
+@Repository
+public interface VehicleRepositoryInterface extends JpaRepository<VehicleEntity, UUID>
 {
-    void save(Vehicle client);
-
-    void delete(Vehicle client);
+    boolean existsByRegistrationPlate(String registrationPlate);
 }

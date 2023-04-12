@@ -1,16 +1,23 @@
 package com.carmanager.Vehicle.Controller;
 
-import com.carmanager.Vehicle.Domain.Entity.Vehicle;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.carmanager.Vehicle.API.VehicleAPI;
+import com.carmanager.Vehicle.Controller.DTO.VehicleDTO;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/vehicle")
 public class VehicleController
 {
-    public String add(@RequestBody Vehicle vehicle)
+    @Autowired
+    VehicleAPI vehicleAPI;
+
+    @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void add(@Valid @RequestBody VehicleDTO vehicleDTO)
     {
-        return "Create vehicle with data " + vehicle.toString();
+        vehicleAPI.add(vehicleDTO);
     }
 }
