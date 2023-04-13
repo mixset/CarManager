@@ -5,7 +5,7 @@ import com.carmanager.Client.Domain.Client;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EntityToDomainMapper
+public class ClientEntityToDomainMapper
 {
     public static Client map(ClientEntity clientEntity)
     {

@@ -9,11 +9,18 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.UUID;
+
 @Service
 public class VehicleAPI
 {
     @Autowired
     VehicleManager vehicleManager;
+
+    public boolean existsByUUID(UUID vehicleId)
+    {
+        return vehicleManager.existsByUUID(vehicleId);
+    }
 
     public void add(VehicleDTO vehicleDTO)
     {

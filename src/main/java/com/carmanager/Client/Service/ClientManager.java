@@ -14,9 +14,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
-public class UserManager
+public class ClientManager
 {
     @Autowired
     ClientRepositoryInterface clientRepository;
@@ -38,28 +39,32 @@ public class UserManager
         return new Client();
     }
 
-    public Client findById(Long clientId) throws ClientNotFoundException
+    public Client findById(UUID clientId) throws ClientNotFoundException
     {
         Optional<ClientEntity> entity = clientRepository.findById(clientId);
 
         if (entity.isEmpty()) {
-            throw new ClientNotFoundException();
+            throw new ClientNotFoundException("Client with ID %s not found.".formatted(clientId));
         }
 
         return singleClientAdapter.adapt(entity.get());
     }
 
-    public void delete(Long clientId)
+    public void delete(UUID clientId) throws ClientNotFoundException
     {
+        if (!clientRepository.existsById(clientId)) {
+            throw new ClientNotFoundException("Client with ID %s not found.".formatted(clientId));
+        }
+
         clientRepository.deleteById(clientId);
     }
 
-    public void update(Long clientId, Client client) throws ClientNotFoundException
+    public void update(UUID clientId, Client client) throws ClientNotFoundException
     {
         Optional<ClientEntity> entity = clientRepository.findById(clientId);
 
         if (entity.isEmpty()) {
-            throw new ClientNotFoundException();
+            throw new ClientNotFoundException("Client with ID %s not found.".formatted(clientId));
         }
 
         clientRepository.save(

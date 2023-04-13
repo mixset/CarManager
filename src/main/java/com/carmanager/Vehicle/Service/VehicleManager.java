@@ -7,6 +7,8 @@ import com.carmanager.Vehicle.Repository.VehicleRepositoryInterface;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 @Service
 public class VehicleManager
 {
@@ -32,5 +34,10 @@ public class VehicleManager
         vehicleRepository.save(
             saveVehicleAdapter.adapt(vehicle)
         );
+    }
+
+    public boolean existsByUUID(UUID vehicleId)
+    {
+        return vehicleRepository.existsById(vehicleId);
     }
 }

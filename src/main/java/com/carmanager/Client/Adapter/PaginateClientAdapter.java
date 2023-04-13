@@ -16,12 +16,12 @@ public class PaginateClientAdapter implements PaginateClientAdapterInterface
     @Override
     public Page<Client> adapt(Page<ClientEntity> clientList)
     {
-        List<Client> dtos = clientList
+        List<Client> clients = clientList
                 .getContent()
                 .stream()
-                .map(EntityToDomainMapper::map)
+                .map(ClientEntityToDomainMapper::map)
                 .collect(Collectors.toList());
 
-        return new PageImpl<>(dtos, clientList.getPageable(), clientList.getTotalElements());
+        return new PageImpl<>(clients, clientList.getPageable(), clientList.getTotalElements());
     }
 }

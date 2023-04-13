@@ -4,15 +4,8 @@ import com.carmanager.Client.Adapter.Persistance.Entity.ClientEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
-import java.util.Optional;
+import java.util.UUID;
 
-public interface ClientRepositoryInterface extends PagingAndSortingRepository<ClientEntity, Long>, JpaRepository<ClientEntity, Long>
+public interface ClientRepositoryInterface extends PagingAndSortingRepository<ClientEntity, UUID>, JpaRepository<ClientEntity, UUID>
 {
-/*    void save(ClientEntity client);
-
-    ClientEntity findById(Long clientId);
-
-    void update(ClientEntity client);
-
-    void delete(Long clientId);*/
 }

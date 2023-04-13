@@ -22,6 +22,6 @@ public class BrandEntity
     @Column(nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<ClientVehiclesEntity> clientHasVehicle = new HashSet<>();
+    //@OneToMany(mappedBy = "brand", cascade = CascadeType.ALL, orphanRemoval = true)
+   // private Set<ClientVehiclesEntity> clientHasVehicle = new HashSet<>();
 }

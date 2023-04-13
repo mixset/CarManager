@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.UUID;
+
 @Entity
 @Table(name = "client")
 @Getter
@@ -15,24 +17,18 @@ import lombok.Setter;
 public class ClientEntity
 {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID uuid;
 
     @Column(nullable = false)
-    public String firstname;
+    private String firstname;
 
     @Column(nullable = false)
-    public String lastname;
+    private String lastname;
 
     public ClientEntity(String firstname, String lastname)
     {
         this.firstname = firstname;
         this.lastname = lastname;
-    }
-
-    @Override
-    public String toString()
-    {
-        return firstname.concat(" ").concat(lastname);
     }
 }
