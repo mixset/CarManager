@@ -1,6 +1,7 @@
 package com.carmanager.Vehicle.API;
 
 import com.carmanager.Vehicle.Controller.DTO.VehicleDTO;
+import com.carmanager.Vehicle.Controller.DTO.VehicleDetailDTO;
 import com.carmanager.Vehicle.Domain.Exception.VehicleAlreadyExistsException;
 import com.carmanager.Vehicle.Domain.Vehicle;
 import com.carmanager.Vehicle.Service.VehicleManager;
@@ -33,5 +34,10 @@ public class VehicleAPI
         } catch (VehicleAlreadyExistsException e) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public VehicleDetailDTO findById(UUID vehicleId)
+    {
+        return vehicleManager.findById(vehicleId);
     }
 }
