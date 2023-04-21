@@ -1,5 +1,7 @@
 package com.carmanager.Brand.API;
 
+import com.carmanager.Brand.API.DTO.BrandCreatedResponseDTO;
+import com.carmanager.Brand.Adapter.Persistence.Entity.BrandEntity;
 import com.carmanager.Brand.Controller.DTO.BrandDTO;
 import com.carmanager.Brand.Domain.Brand;
 import com.carmanager.Brand.Domain.Exception.BrandAlreadyExistsException;
@@ -17,15 +19,21 @@ public class BrandAPI
     @Autowired
     BrandManager brandManager;
 
-    public void add(BrandDTO brandDTO)
+    public BrandCreatedResponseDTO add(BrandDTO brandDTO)
     {
         Brand brand = brandManager.createNew();
         brand.setName(brandDTO.getName());
 
         try {
-            brandManager.save(brand);
+            BrandEntity result = brandManager.save(brand);
+            return BrandCreatedResponseDTO
+                    .builder()
+                    .status(HttpStatus.CREATED.value())
+                    .name(result.getName())
+                    .uuid(result.getUuid())
+                    .build();
         } catch (BrandAlreadyExistsException e) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+            return BrandCreatedResponseDTO.builder().status(HttpStatus.BAD_REQUEST.value()).build();
         }
     }
 

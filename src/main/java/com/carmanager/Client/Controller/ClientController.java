@@ -1,7 +1,6 @@
 package com.carmanager.Client.Controller;
 
 import com.carmanager.Client.API.ClientAPI;
-import com.carmanager.Client.Adapter.Persistance.Entity.ClientVehiclesEntity;
 import com.carmanager.Client.Controller.DTO.ClientDTO;
 import com.carmanager.Client.Controller.DTO.ClientVehicleDTO;
 import com.carmanager.Client.Controller.DTO.ClientVehiclesResponse;

@@ -1,10 +1,11 @@
 package com.carmanager.Brand.Controller;
 
 import com.carmanager.Brand.API.BrandAPI;
+import com.carmanager.Brand.API.DTO.BrandCreatedResponseDTO;
 import com.carmanager.Brand.Controller.DTO.BrandDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,12 +13,13 @@ import org.springframework.web.bind.annotation.*;
 public class BrandController
 {
     @Autowired
-    BrandAPI BrandAPI;
+    BrandAPI brandAPI;
 
     @PostMapping("/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public void add(@Valid @RequestBody BrandDTO brandDTO)
+    public ResponseEntity<BrandCreatedResponseDTO> add(@Valid @RequestBody BrandDTO brandDTO)
     {
-        BrandAPI.add(brandDTO);
+        BrandCreatedResponseDTO response = brandAPI.add(brandDTO);
+
+        return ResponseEntity.status(response.getStatus()).body(response);
     }
 }

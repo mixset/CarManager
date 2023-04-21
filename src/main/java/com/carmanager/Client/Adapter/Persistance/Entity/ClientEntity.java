@@ -25,10 +25,4 @@ public class ClientEntity
 
     @Column(nullable = false)
     private String lastname;
-
-    public ClientEntity(String firstname, String lastname)
-    {
-        this.firstname = firstname;
-        this.lastname = lastname;
-    }
 }

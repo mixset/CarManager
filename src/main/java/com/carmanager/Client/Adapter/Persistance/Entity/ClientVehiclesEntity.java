@@ -1,6 +1,5 @@
 package com.carmanager.Client.Adapter.Persistance.Entity;
 
-import com.carmanager.Vehicle.Adapter.Entity.VehicleEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,13 +22,7 @@ public class ClientVehiclesEntity
 
     @JoinColumn(name = "client_id")
     private UUID clientId;
-//
-  //  @ManyToOne
-  //  private ClientEntity client;
 
     @JoinColumn(name = "vehicle_id")
     private UUID vehicleId;
-
-  //  @ManyToOne
-   // private VehicleEntity vehicle;
 }

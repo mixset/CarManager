@@ -30,13 +30,13 @@ public class BrandManager
         return new Brand();
     }
 
-    public void save(Brand brand) throws BrandAlreadyExistsException
+    public BrandEntity save(Brand brand) throws BrandAlreadyExistsException
     {
         if (brandRepository.existsByName(brand.getName())) {
             throw new BrandAlreadyExistsException("Brand %s already exists".formatted(brand.getName()));
         }
 
-        brandRepository.save(
+        return brandRepository.save(
             saveBrandAdapter.adapt(brand)
         );
     }
